@@ -1,0 +1,38 @@
+const { Command } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
+
+module.exports = class ReRollCommand extends Command {
+    constructor() {
+        super('rerollGiveaway', {
+            description: {
+                content: 'Rerolls a giveaway.',
+                usage: '<messageID>'
+            },
+            category: 'invites',
+            clientPermissions: ['EMBED_LINKS'],
+            ratelimit: 2,
+            args: [
+                {
+                    id: 'entry',
+                    type: 'custom-GIVEAWAY',
+                    prompt: {
+                        start: 'Which giveaway would you like to end?',
+                        retry: 'That\'s not a valid giveaway! Try again.'
+                    }
+                }
+            ],
+            userPermissions(message) {
+                if(!message.member.roles.cache.some(role => role.name === 'Manage Giveaways') && !message.member.permissions.has(['BAN_MEMBERS', 'KICK_MEMBERS', 'MANAGE_GUILD', 'MANAGE_CHANNELS'])) return 'Manage Giveaways';
+                return null;
+            }
+        });
+    };
+    async exec(message, {entry}) {
+        const embed = new MessageEmbed()
+            .setDescription('Successfully rerolled giveaway!')
+            .setColor('GREEN')
+            .setTimestamp();
+        this.client.tools.endGiveaway(this.client, entry);
+        message.channel.send(embed);
+    };
+};
