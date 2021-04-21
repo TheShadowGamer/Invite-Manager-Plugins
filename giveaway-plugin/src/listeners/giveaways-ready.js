@@ -19,11 +19,11 @@ module.exports = class GiveawayReadyListener extends Listener {
             host: STRING,
             winners: NUMBER,
             deleteAt: DATE
-        })
-        this.client.giveaways.sync()
-        setInterval(() => endGiveaway(this.client), 30000)
-        setInterval(() => updateTimes(this.client), 150000)
-        setInterval(() => endOverdate(this.client), 300000)
+        });
+        this.client.giveaways.sync();
+        setInterval(() => endGiveaway(this.client), 30000);
+        setInterval(() => updateTimes(this.client), 150000);
+        setInterval(() => endOverdate(this.client), 300000);
     };
 };
 
@@ -34,16 +34,16 @@ async function endGiveaway (client) {
                 [lte]: Date.now()
             }
         }
-    })
+    });
     past.forEach(async entry => {
-        if(!entry.deleteAt) client.tools.endGiveaway(client, entry)
-    })
-}
+        if(!entry.deleteAt) client.tools.endGiveaway(client, entry);
+    });
+};
 
 async function updateTimes (client) {
-    let giveaways = await client.giveaways.findAll()
+    let giveaways = await client.giveaways.findAll();
     giveaways.forEach(async (entry) => {
-        let channel
+        let channel;
         try {
             channel = await client.channels.fetch(entry.channel);
         } catch (error) {}
@@ -66,10 +66,10 @@ async function updateTimes (client) {
             }
         });
         let embed = new MessageEmbed(message.embeds[0])
-        .setDescription(`Click the reaction below to enter!\n\nTime Left: ${parseMS(entry.end - Date.now(), {verbose: true})}\nHost: <@${entry.host}>`)
-        message.edit(embed)
-    })
-}
+        .setDescription(`Click the reaction below to enter!\n\nTime Left: ${parseMS(entry.end - Date.now(), {verbose: true})}\nHost: <@${entry.host}>`);
+        message.edit(embed);
+    });
+};
 
 async function endOverdate (client) {
     let expired = await client.giveaways.findAll({
@@ -78,7 +78,7 @@ async function endOverdate (client) {
                 [lte]: Date.now()
             }
         }
-    })
+    });
     expired.forEach(async entry => {
         entry.destroy({
             where: {
@@ -86,6 +86,6 @@ async function endOverdate (client) {
                 channel: entry.channel,
                 guild: entry.guild
             }
-        })
-    })
-}
+        });
+    });
+};

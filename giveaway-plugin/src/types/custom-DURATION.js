@@ -6,4 +6,4 @@ module.exports = async (message, phrase, client) => {
     if(!time) return null;
     let date = Date.now();
     return new Date(date += time);
-}
+};

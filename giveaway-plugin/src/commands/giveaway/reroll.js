@@ -32,6 +32,11 @@ module.exports = class ReRollCommand extends Command {
             .setDescription('Successfully rerolled giveaway!')
             .setColor('GREEN')
             .setTimestamp();
+        if(!entry.deleteAt) {
+            embed.setColor('RED')
+                .setDescription(`This giveaway hasn't ended yet! If you would like to end it, please do \`${this.handler.prefix}giveaway end ${entry.message}\`!`);
+            return message.channel.send(embed);
+        };
         this.client.tools.endGiveaway(this.client, entry);
         message.channel.send(embed);
     };
