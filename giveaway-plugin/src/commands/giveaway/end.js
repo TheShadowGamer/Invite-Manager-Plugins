@@ -34,9 +34,9 @@ module.exports = class EndGiveawayCommand extends Command {
             .setTimestamp();
         if(entry.deleteAt) {
             embed.setColor(this.client.config.colors.error)
-                .setDescription(`This giveaway has already ended! If you would like new winners, please do \`${this.handler.prefix}giveaway reroll ${entry.message}\`!`)
-            return message.channel.send(embed)
-        }
+                .setDescription(`This giveaway has already ended! If you would like new winners, please do \`${this.handler.prefix}giveaway reroll ${entry.message}\`!`);
+            return message.channel.send(embed);
+        };
         this.client.tools.endGiveaway(this.client, entry);
         message.channel.send(embed);
     };

@@ -18,7 +18,7 @@ module.exports = class StartGiveawayCommand extends Command {
                     type: 'custom-DURATION',
                     prompt: {
                         start: 'How long should this giveaway last?',
-                        retry: 'That\'s not a valid duration! Try again.'
+                        retry: 'That\'s not a valid duration! Please try again!'
                     }
                 },
                 {
@@ -44,14 +44,14 @@ module.exports = class StartGiveawayCommand extends Command {
     };
     
     async exec(message, {duration, winners, item}) {
-        if(winners == 0) return message.channel.send('You cannot have 0 winners! Please run the command again!')
+        if(winners == 0) return message.channel.send('You cannot have 0 winners! Please run the command again!');
         const embed = new MessageEmbed()
             .setColor('GREEN')
             .setTitle(item)
-            .setDescription(`Click the reaction below to enter!\n\nTime Left: ${parseMS(duration - Date.now(), {verbose: true, keepDecimalsOnWholeSeconds: false})}\nHost: ${message.author.toString()}`)
-            .setTimestamp(duration)
-        if(winners == 1) { embed.setFooter(`${winners} winner | Ends at`) } else { embed.setFooter(`${winners} winner | Ends at`) }
-        let msg = await message.channel.send(embed)
+            .setDescription(`Click the reaction below to enter!\n\nTime Left: ${parseMS(duration - Date.now())}\nHost: ${message.author.toString()}`)
+            .setTimestamp(duration);
+        if(winners == 1) { embed.setFooter(`${winners} winner | Ends at`) } else { embed.setFooter(`${winners} winner | Ends at`) };
+        let msg = await message.channel.send(embed);
         this.client.giveaways.create({
             end: duration,
             guild: message.guild.id,
@@ -59,7 +59,7 @@ module.exports = class StartGiveawayCommand extends Command {
             message: msg.id,
             host: message.author.id,
             winners: winners
-        })
-        msg.react('🎉')
+        });
+        msg.react('🎉');
     };
 };

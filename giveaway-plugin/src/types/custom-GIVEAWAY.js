@@ -32,4 +32,4 @@ module.exports = async (message, phrase, client) => {
     };
     if(!msg) return null;
     return find || null;
-}
+};
