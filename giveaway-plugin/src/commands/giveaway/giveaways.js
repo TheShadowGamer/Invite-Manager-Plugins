@@ -34,7 +34,8 @@ module.exports.slashCommand = async (client, interaction, args, respond) => {
         if(!interaction.member.roles.cache.some(role => role.name === 'Manage Giveaways') && !interaction.member.permissions.has(['BAN_MEMBERS', 'KICK_MEMBERS', 'MANAGE_GUILD', 'MANAGE_CHANNELS'])) client.handler.emit('missingPermissions', respond, client.handler.findCommand('giveaways'), 'user', 'Manage Giveaways');
         let duration = args[0].value;
         let item = args[1].value;
-        let winners = args[2]?.value || 1;
+        let winners = 1;
+        if(args[2]) winners = args[2].value
         duration = await client.handler.resolver.type('custom-DURATION')(interaction, duration, client);
         if(!duration) return respond('That\'s not a valid duration! Please try again!');
         if(winners == 0) return message.channel.send('You cannot have 0 winners! Please run the command again!');
