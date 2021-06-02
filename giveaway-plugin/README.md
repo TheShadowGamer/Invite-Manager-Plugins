@@ -1,7 +1,7 @@
 # Giveaway Plugin
 This plugin allows you to do giveaways using your bot. If you find any issues with any of these commands, report them to Anonymous on the support server.
-## Instalation
-* Open the bot terminal/repl.it shell.
+## Instalation (Linux)
+* Open the bot terminal.
 * Run `bash <(curl -s https://raw.githubusercontent.com/theshadowgamer/invite-manager-plugins/master/giveaway-plugin/installer.sh)`
 * Restart the bot.
 ## How to use
